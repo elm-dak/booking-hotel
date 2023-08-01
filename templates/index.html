@@ -1,0 +1,157 @@
+    {% extends 'basic.html' %}
+    {% block title %}Hotel Casanegra
+    {% endblock title %}
+    {% block body %}
+     <!--Booking Section starts here-->
+    <section>
+        <div class="container-fluid py-5 px-5 ">
+            <form action="" method="POST">
+            {% csrf_token %}
+            <div class="row justify-content-center py-5 bg-light">
+                <div class="col-lg-4">
+                    <label for="">Location</label>
+                    <select class="form-control" name="search_location" id="roomstatus">
+                        <!--Hotel id and location-->
+                        <option>Location</option>
+                        {% for each_location,each_hotel_id in all_location %}
+                            
+                            <option value={{each_hotel_id}}>{{each_location}}</option>
+                        {% endfor %}    
+                        
+                        
+                            
+                    </select>
+                </div>
+                {%load app_tags%}
+                <div class="col-lg-2">
+                    <label for="">Check in</label>
+                    <input class="form-control mr-sm-2" type="date" placeholder="Check in" name="cin" min={%todays_date%} max={% max_date %} aria-label="Search" required="True">
+                </div>
+                <div class="col-lg-2">
+                    <label for="">Check Out</label>
+                    <input class="form-control mr-sm-2" type="date" placeholder="Check out" name="cout" min={%tommorow%} max={% max_date%} aria-label="Search" required="True">
+                </div>
+                <div class="col-lg-2">
+                    <label for="">Person</label>
+                    <input class="form-control mr-sm-2" type="number" placeholder="Person" name="capacity" aria-label="Search" required="True">
+                </div>
+                <div class="col-lg-2">
+
+                    <input type="submit" value="Check Availabilty" class="form-control mr-sm-2 btn btn-primary my-4" style="position: relative;top: 7px;">
+                </div>
+                {% if rooms %}
+                <p class="text-center text-success">Rooms Available</p>
+                {% endif %}
+                
+            </div>
+            </form>
+
+        </div>
+    </section>
+    <!--Booking Section ends here-->
+    <!--Fetched reults appear here-->
+    <div class="container-fluid px-0 mx-aut">
+        {% if rooms %}
+           <table class="table">
+               <thead class="o">
+                <th>Type</th>
+                <th>Location</th>
+                <th>Person</th>
+                <th>price</th>
+                <th>Action</th>
+            </thead>
+            {% for r in rooms %}
+                <tr class="">
+                <td>{{ r.get_room_type_display }}</td>
+                <td>{{ r.hotel.location }}</td>
+                <td>{{ r.capacity }}</td>
+                <td>{{ r.price }}</td>
+                
+                <td><a href="/user/book-room?roomid={{r.id}}"><button class="btn btn-warning">Book Now</button></a></td>
+                </tr>
+            {% endfor %}
+            
+           </table> 
+        {% endif %}
+    </div>
+    <!--Fetched results ends here-->
+
+
+    <h3 class="text-center text-dark">Rooms Types</h3>
+
+    <!--Room tables starts here-->
+    <div class="container-fluid px-0" style="border:1px solid red">
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center">Information</th>
+                    <th class="text-center">View</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">
+                        <!--Room details-->
+                        <h1>Budget</h1>
+                        <p>Price:200DH/day</p>
+
+                        <p>Size :30 ft</p>
+                        <p>Capacity :Max person 2</p>
+
+                        <p>Services :Wifi,Tv,Bathroom</p>
+                        <p> Views :Sea View</p>
+                    </td>
+                    <td class="text-center">
+                        <!--Room Images-->
+                        <img src="https://www.hotelscombined.fr/himg/9f/ed/81/hotelsdotcom-234737-90dc5d4e_w-648338.jpg" alt="" class="img-fluid pt-4" style="height: 250px; width: 400px;">
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <!--Room details-->
+                        <h1>Premium</h1>
+                        <p>Price:600DH/day</p>
+
+                        <p>Size :30 ft</p>
+                        <p>Capacity :Max person 2</p>
+
+                        <p>Services :Wifi,Tv,Bathroom</p>
+                        <p>Views :Sea View</p>
+                    </td>
+                    <td class="text-center">
+                        <!--Room Images-->
+                        <img src="https://cdn.galaxy.tf/unit-media/tc-default/uploads/images/room_photo/001/623/844/chambre-deluxe-balcon-standard.jpg" alt="" class="img-fluid pt-4" style="height: 250px; width: 400px;">
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <!--Room details-->
+                        <h1>Deluxe</h1>
+                        <p>Price:1100DH/day</p>
+
+                        <p>Size :30 ft</p>
+                        <p>Capacity :Max person 4</p>
+
+                        <p>Services :Wifi,Tv,Bathroom</p>
+                        <p>Views :Sea View</p>
+                    </td>
+                    <td class="text-center">
+                        <!--Room Images-->
+                        <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/394012878.jpg?k=06617f1b88a3bfdd2a29ae3114dafab6143c24af3af2c3b58ee3fd771c2995ff&o=&hp=1"
+                            alt="" class="img-fluid pt-4" style="height: 250px; width: 400px;">
+                    </td>
+
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <!--Roo tables ends here-->
+
+    
+    {% endblock body %}
+   
+   
